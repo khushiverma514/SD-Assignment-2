@@ -1,0 +1,115 @@
+SD_ASSIGNMENT 2
+
+problem 1:
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Age INT CHECK (Age BETWEEN 18 AND 25),
+    Grade DECIMAL(3, 1) CHECK (Grade BETWEEN 0.0 AND 10.0)
+);
+
+INSERT INTO Students (StudentID, Name, Age, Grade)
+VALUES (1, 'Khushi verma', 17, 8.5); 
+
+
+INSERT INTO Students (StudentID, Name, Age, Grade)
+VALUES (2, 'Seeratss', 20, 11.0); 
+
+CHECK constraint failed: Students
+
+CHECK constraint failed: Students
+
+
+problem 2:
+
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(100),
+    Credits INT NOT NULL
+);
+
+
+INSERT INTO Courses (CourseName, Credits)
+VALUES ('Data Structures', 4);
+
+ERROR: Field 
+
+proble 3:
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    ProductID INT,
+    OrderQuantity INT,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+INSERT INTO Orders (OrderID, ProductID, OrderQuantity)
+VALUES (1, 999, 5); -- Assuming ProductID 999 does not exist
+
+ERROR: Foreign key constraint failed
+
+-- Insert into Products
+INSERT INTO Products (ProductID, ProductName)
+VALUES (101, 'Laptop'), (102, 'Mouse');
+
+-- Insert into Orders
+INSERT INTO Orders (OrderID, ProductID, OrderQuantity)
+VALUES (1, 101, 2), (2, 102, 10);
+
+
+problem 4:
+
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    Email VARCHAR(100) UNIQUE,
+    Name VARCHAR(50),
+    Role VARCHAR(50)
+);
+
+INSERT INTO Employees (EmployeeID, Email, Name, Role)
+VALUES (1, 'employee@example.com', 'John Doe', 'Manager');
+
+INSERT INTO Employees (EmployeeID, Email, Name, Role)
+VALUES (2, 'employee@example.com', 'Jane Smith', 'Developer'); -- Duplicate email
+
+ERROR: Duplicate entry for key 'Email'
+
+INSERT INTO Employees (EmployeeID, Name, Role)
+VALUES (3, 'Jake White', 'Contractor');
+
+
+problem 5:
+
+-- Create Accounts table
+CREATE TABLE Accounts (
+    AccountID INT PRIMARY KEY,
+    MobileNumber VARCHAR(10) NOT NULL CHECK (LENGTH(MobileNumber) = 10),
+    Balance DECIMAL(10, 2) NOT NULL CHECK (Balance >= 0)
+);
+
+-- Create Transactions table
+CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY,
+    AccountID INT,
+    TransactionAmount DECIMAL(10, 2) NOT NULL CHECK (TransactionAmount <> 0),
+    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
+);
+
+
+INSERT INTO Transactions (TransactionID, AccountID, TransactionAmount)
+VALUES (1, 999, 100.00);
+
+-- Insert a valid account into Accounts table
+INSERT INTO Accounts (AccountID, MobileNumber, Balance)
+VALUES (1, '1234567890', 500.00);
+
+-- Insert a valid transaction into Transactions table
+INSERT INTO Transactions (TransactionID, AccountID, TransactionAmount)
+VALUES (1, 1, 100.00);
+
